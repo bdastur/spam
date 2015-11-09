@@ -5,11 +5,9 @@
 import spam.ansirunner
 import spam.plugins.rados as rados
 
-
-host_list = ["11.111.11.1", "12.122.21.2", "12.123.21.22"]
-remote_user = "eoot"
-remote_pass = "eeeeeeeeee3"
-
+host_list = ["11.111.11.1", "11.113.11.1", "11.111.11.13"]
+remote_user = "wwot"
+remote_pass = "wwwwwwwwww3"
 
 def execute_ping():
     '''
@@ -56,13 +54,17 @@ def execute_rados_df():
 
 def execute_rados_df2():
     rados_handle = rados.Rados()
-    result, failed_hosts = rados_handle.perform_operation(
-        host_list=["11.111.11.1"],
-        remote_user=remote_user,
-        remote_pass=remote_pass,
-        cmd="rados df")
+    result = rados_handle.rados_df(host_list=["10.163.41.4"],
+                                   remote_user=remote_user,
+                                   remote_pass=remote_pass)
 
-    print "Rados result: ", result
+    #result, failed_hosts = rados_handle.perform_operation(
+    #    host_list=["10.163.41.4"],
+    #    remote_user=remote_user,
+    #    remote_pass=remote_pass,
+    #    cmd="rados df")
+    print "RESULTS: ", result['contacted']['10.163.41.4']['parsed_results']
+
 
 
 def main():
@@ -70,8 +72,8 @@ def main():
     Simple examples
     '''
     execute_ping()
-    execute_ls()
-    execute_rados_df()
+    #execute_ls()
+    #execute_rados_df()
     execute_rados_df2()
 
 
