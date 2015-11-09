@@ -98,6 +98,7 @@ class AnsibleRunner(object):
     def ansible_perform_operation(self,
                                   host_list=None,
                                   remote_user=None,
+                                  remote_pass=None,
                                   module=None,
                                   complex_args=None,
                                   module_args='',
@@ -120,6 +121,7 @@ class AnsibleRunner(object):
             module_name=module,
             host_list=host_list,
             remote_user=remote_user,
+            remote_pass=remote_pass,
             module_args=module_args,
             complex_args=complex_args,
             environment=environment,
@@ -134,5 +136,18 @@ class AnsibleRunner(object):
                 (module, complex_args, failed_hosts)
 
         return results, failed_hosts
+
+    def ansible_get_dark_hosts(self,
+                               ansible_result):
+        '''
+        Given the ansible result object, return the list of
+        hosts that could not be contacted
+        '''
+        if not ansible_result['dark']:
+            return []
+
+        return ansible_result['dark'].keys()
+
+
 
 
