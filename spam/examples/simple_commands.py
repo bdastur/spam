@@ -57,7 +57,7 @@ def execute_rados_df():
 def execute_rados_df2():
     rados_handle = rados.Rados()
     result, failed_hosts = rados_handle.perform_operation(
-        host_list=["10.163.41.4"],
+        host_list=["11.111.11.1"],
         remote_user=remote_user,
         remote_pass=remote_pass,
         cmd="rados df")
