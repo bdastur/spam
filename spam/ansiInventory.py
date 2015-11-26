@@ -32,17 +32,15 @@ class AnsibleInventory(object):
         '''
         Get the hosts
         '''
-        if not group:
-            return self.inventory.hosts.keys()
-
-        groupobj = self.inventory.groups.get(group, None)
-        if not groupobj:
-            return None
-
-        hostobjs = groupobj.get_hosts()
         hostlist = []
-        for host in hostobjs:
-            hostlist.append(host.name)
+        for group in self.inventory.groups:
+            groupdict = {}
+            groupdict['group'] = group
+            groupdict['hostlist'] = []
+            groupobj = self.inventory.groups.get(group)
+            for host in groupobj.get_hosts():
+                groupdict['hostlist'].append(host.name)
+            hostlist.append(groupdict)
 
         return hostlist
 
