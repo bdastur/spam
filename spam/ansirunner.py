@@ -104,6 +104,9 @@ class AnsibleRunner(object):
                                   module_args='',
                                   environment=None,
                                   check=False,
+                                  sudo=False,
+                                  sudo_user=None,
+                                  sudo_pass=None,
                                   forks=2):
         '''
         Perform any ansible operation.
@@ -126,6 +129,9 @@ class AnsibleRunner(object):
             complex_args=complex_args,
             environment=environment,
             check=check,
+            sudo=sudo,
+            sudo_user=sudo_user,
+            sudo_pass=sudo_pass,
             forks=forks)
 
         results = runner.run()
