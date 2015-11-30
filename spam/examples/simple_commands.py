@@ -8,7 +8,8 @@ import spam.ansirunner
 import spam.plugins.rados as rados
 
 
-def execute_ping(host_list, remote_user, remote_pass):
+def execute_ping(host_list, remote_user, remote_pass,
+                 sudo=False, sudo_user=None, sudo_pass=None):
     '''
     Execute ls on some hosts
     '''
@@ -17,6 +18,9 @@ def execute_ping(host_list, remote_user, remote_pass):
         host_list=host_list,
         remote_user=remote_user,
         remote_pass=remote_pass,
+        sudo=sudo,
+        sudo_pass=sudo_pass,
+        sudo_user=sudo_user,
         module="ping")
 
     print result, failed_hosts
@@ -74,6 +78,9 @@ def parse_arguments():
     parser.add_argument("--askpass",
                         help="Ansible operation will prompt for user password",
                         action="store_true")
+    parser.add_argument("--asksudopass",
+                        help="Ansible operation will prompt for sudo password",
+                        action="store_true")
 
     args = parser.parse_args()
     return args
@@ -86,17 +93,33 @@ def main():
     args = parse_arguments()
     if args.askpass:
         password = getpass.getpass("Password: ")
+    else:
+        password = None
+
+    if args.asksudopass:
+        sudo = True
+        sudo_pass = getpass.getpass("Sudo password[default ssh password]: ")
+        if len(sudo_pass) == 0:
+            sudo_pass = password
+        sudo_user = 'root'
+    else:
+        sudo = False
+        sudo_pass = None
+        sudo_user = None
 
     if not args.username:
         username = getpass.getuser()
+    else:
+        username = args.username
 
-    host_list = args.remote_hosts
+    host_list = args.hosts
     os.environ["ANSIBLE_HOST_KEY_CHECKING"] = "False"
 
-    execute_ping(host_list, username, password)
+    execute_ping(host_list, username, password,
+                 sudo=sudo, sudo_user=sudo_user, sudo_pass=sudo_pass)
     #execute_ls()
     #execute_rados_df()
-    execute_rados_df2(host_list, username, password)
+    #execute_rados_df2(host_list, username, password)
 
 
 if __name__ == '__main__':
