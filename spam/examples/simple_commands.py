@@ -64,9 +64,25 @@ def execute_rados_df2(host_list, remote_user, remote_pass):
     print "RESULTS: ", result['contacted']
 
 
+
+def print_description():
+    description = \
+        '''
+        simple_commands.py.
+        Ansible Runner usage examples
+        -----------------------------
+        ./simple_commands.py  --hosts xyz.com abc.com \
+         --username behzad_dastur --askpass --asksudopass
+        '''
+
+    return description
+
+
 def parse_arguments():
-    parser = argparse.ArgumentParser(prog="cloudops.py",
-                                     description="CPE Cloud Ops ")
+    parser = argparse.ArgumentParser(
+        prog="simple_commands.py",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description=print_description())
 
     parser.add_argument("--hosts",
                         help="Hosts to execute operations on",
