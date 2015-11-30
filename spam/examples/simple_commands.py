@@ -71,7 +71,7 @@ def parse_arguments():
     parser.add_argument("--username",
                         help="Username for remote hosts",
                         required=True)
-    parser.add_argument("--ask-pass",
+    parser.add_argument("--askpass",
                         help="Ansible operation will prompt for user password",
                         action="store_true")
 
