@@ -22,6 +22,7 @@ class AnsibleInventory(object):
         '''
         Initialize Inventory
         '''
+        self.inventory = None
         if not os.path.exists(inventory_filename):
             print "Provide a valid inventory filename"
             return
@@ -33,14 +34,23 @@ class AnsibleInventory(object):
         Get the hosts
         '''
         hostlist = []
-        for group in self.inventory.groups:
-            groupdict = {}
-            groupdict['group'] = group
-            groupdict['hostlist'] = []
+
+        if group:
             groupobj = self.inventory.groups.get(group)
+            groupdict = {}
+            groupdict['hostlist'] = []
             for host in groupobj.get_hosts():
                 groupdict['hostlist'].append(host.name)
             hostlist.append(groupdict)
+        else:
+            for group in self.inventory.groups:
+                groupdict = {}
+                groupdict['group'] = group
+                groupdict['hostlist'] = []
+                groupobj = self.inventory.groups.get(group)
+                for host in groupobj.get_hosts():
+                    groupdict['hostlist'].append(host.name)
+                hostlist.append(groupdict)
 
         return hostlist
 
