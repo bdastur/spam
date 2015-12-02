@@ -1,0 +1,23 @@
+[BASIC]
+# Allow constant names to be lower case
+const-rgx=[a-zA-Z_][a-zA-Z0-9_]{2,30}$
+module-rgx=[a-zA-Z_][a-zA-Z0-9_]{2,30}$
+max-line-length=88
+max-args=10
+max-branches=20
+max-locals=20
+max-public-methods=80
+good-names=az,ip,_,rc
+max-statements=150
+max-returns=9
+disable=W0141
+max-module-lines=2000
+
+
+[MESSAGE CONTROL]
+disable=unused-argument, no-self-use, import-error, too-many-arguments
+
+
+[SIMILARITIES]
+min-similarity-lines=5
+
