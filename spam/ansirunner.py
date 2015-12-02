@@ -17,11 +17,12 @@ class AnsibleRunner(object):
     '''
     Ansible Runner Wrapper class.
     '''
-    def __init__(self):
+    def __init__(self, host_list=None, remote_user=None):
         '''
         Initialize AnsibleRunner.
         '''
-        pass
+        self.host_list = host_list
+        self.remote_user = remote_user
 
     def validate_host_parameters(self, host_list, remote_user):
         '''
