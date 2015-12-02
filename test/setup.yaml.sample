@@ -1,0 +1,14 @@
+UERNAME: foo 
+PASSWORD: bar 
+
+SERVERS:
+  -
+      ssh_ip: "<ssh ip address>"
+      role: controller|compute|storage
+  -
+      ssh_ip: "<ssh ip address>"
+      role: controller|compute|storage
+  -
+      ssh_ip: "<ssh ip address>"
+      role: controller|compute|storage
+

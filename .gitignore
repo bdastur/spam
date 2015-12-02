@@ -60,3 +60,5 @@ spam/examples/.ropeproject/*
 spam/plugins/.ropeproject/*
 spam/.ropeproject/*
 .ropeproject/*
+*/.ropeproject/*
+test/setup.yaml
