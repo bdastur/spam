@@ -3,7 +3,9 @@
 
 import unittest
 import spam.ansirunner
+import spam.plugins.virsh as virsh
 import yaml
+import pprint
 
 
 class FileHandler(object):
@@ -78,7 +80,7 @@ class SPAMUT(unittest.TestCase):
         self.password = self.fhandler.get_parsed_data(["PASSWORD"])
         self.serveriplist = self.fhandler.get_server_ssh_ips()
 
-    def test_basic(self):
+    def test_ping(self):
         print "basic test"
         print self.username
         print self.serveriplist
@@ -92,6 +94,33 @@ class SPAMUT(unittest.TestCase):
             sudo_user=None,
             module="ping")
 
+    def test_virsh_version(self):
+        virshrunner = virsh.Virsh()
+        virsh_result = virshrunner.virsh_version(
+            host_list=self.serveriplist,
+            remote_user=self.username,
+            remote_pass=self.password,
+            sudo=True,
+            sudo_pass=self.password,
+            sudo_user='root')
+
+        self.failUnless(virsh_result is not None)
+        pp = pprint.PrettyPrinter(indent=2)
+        pp.pprint(virsh_result)
+
+    def test_virsh_version_2(self):
+        virshrunner = virsh.Virsh(
+            host_list=self.serveriplist,
+            remote_user=self.username,
+            remote_pass=self.password,
+            sudo=True,
+            sudo_pass=self.password,
+            sudo_user='root')
+
+        virsh_result = virshrunner.virsh_version(sudo=True)
+        self.failUnless(virsh_result is not None)
+        pp = pprint.PrettyPrinter(indent=2)
+        pp.pprint(virsh_result)
 
     def test_basic1(self):
         print "basic1 test"
