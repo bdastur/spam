@@ -108,7 +108,7 @@ class AnsibleRunner(object):
                                   sudo=False,
                                   sudo_user=None,
                                   sudo_pass=None,
-                                  forks=2):
+                                  forks=20):
         '''
         Perform any ansible operation.
         '''
