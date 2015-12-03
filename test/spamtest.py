@@ -79,6 +79,13 @@ class SPAMUT(unittest.TestCase):
         self.username = self.fhandler.get_parsed_data(["USERNAME"])
         self.password = self.fhandler.get_parsed_data(["PASSWORD"])
         self.serveriplist = self.fhandler.get_server_ssh_ips()
+        self.virshrunner = virsh.Virsh(
+            host_list=self.serveriplist,
+            remote_user=self.username,
+            remote_pass=self.password,
+            sudo=True,
+            sudo_pass=self.password,
+            sudo_user='root')
 
     def test_ping(self):
         print "basic test"
@@ -122,7 +129,57 @@ class SPAMUT(unittest.TestCase):
         pp = pprint.PrettyPrinter(indent=2)
         pp.pprint(virsh_result)
 
-    def test_basic1(self):
-        print "basic1 test"
-        print self.username
+    def test_virsh_version_3(self):
+        virshrunner = virsh.Virsh(
+            host_list=self.serveriplist,
+            remote_user=self.username,
+            remote_pass=self.password,
+            sudo=True,
+            sudo_pass=self.password,
+            sudo_user='root')
+
+        cmd = "virsh version"
+        virsh_result = virshrunner.execute_virsh_command(cmd=cmd,
+                                                         delimiter=":",
+                                                         output_type="LRVALUE",
+                                                         sudo=True)
+        self.failUnless(virsh_result is not None)
+        pp = pprint.PrettyPrinter(indent=2)
+        pp.pprint(virsh_result)
+
+    def test_virsh_list(self):
+        virshrunner = virsh.Virsh(
+            host_list=self.serveriplist,
+            remote_user=self.username,
+            remote_pass=self.password,
+            sudo=True,
+            sudo_pass=self.password,
+            sudo_user='root')
+
+        virsh_result = virshrunner.virsh_list(sudo=True)
+        self.failUnless(virsh_result is not None)
+        pp = pprint.PrettyPrinter(indent=2)
+        pp.pprint(virsh_result)
+
+    def test_virsh_list_2(self):
+
+        cmd = "virsh list"
+        fields = ["Id", "Name", "state"]
+        virsh_result = self.virshrunner.execute_virsh_command(
+            cmd=cmd,
+            output_type="TABLE",
+            fields=fields,
+            sudo=True)
+
+        self.failUnless(virsh_result is not None)
+        pp = pprint.PrettyPrinter(indent=2)
+        pp.pprint(virsh_result)
+
+    def test_virsh_per_domain_info(self):
+        virsh_result = self.virshrunner.virsh_per_domain_info(sudo=True)
+        self.failUnless(virsh_result is not None)
+        pp = pprint.PrettyPrinter(indent=2)
+        pp.pprint(virsh_result)
+
+
 
