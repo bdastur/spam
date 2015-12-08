@@ -37,6 +37,10 @@ class AnsibleInventory(object):
 
         if group:
             groupobj = self.inventory.groups.get(group)
+            if not groupobj:
+                print "Group [%s] not found in inventory" % group
+                return None
+
             groupdict = {}
             groupdict['hostlist'] = []
             for host in groupobj.get_hosts():
