@@ -2,6 +2,7 @@ pyAnsible
 =========
 A python module that interfaces with Ansible Runner and Inventory. Provides an API interface
 to directly invoke ansible module from python API.
+
 --------
 
 + [Introduction] (https://github.com/bdastur/spam/blob/master/README.md#introduction)
