@@ -130,9 +130,9 @@ class AnsibleRunner(object):
             complex_args=complex_args,
             environment=environment,
             check=check,
-            sudo=sudo,
-            sudo_user=sudo_user,
-            sudo_pass=sudo_pass,
+            become=sudo,
+            become_user=sudo_user,
+            become_pass=sudo_pass,
             forks=forks)
 
         results = runner.run()
