@@ -1,5 +1,7 @@
 pyAnsible
 =========
+[![PyPI Version](https://img.shields.io/pypi/v/pyansible.svg)](https://pypi.python.org/pypi/pyansible)
+
 A python module that interfaces with Ansible Runner and Inventory. Provides an API interface
 to directly invoke ansible module from python API.
 
