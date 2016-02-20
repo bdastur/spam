@@ -8,13 +8,11 @@ to directly invoke ansible module from python API.
 + [Introduction] (https://github.com/bdastur/spam/blob/master/README.md#introduction)
 
 # Introduction<a name="introduction"></a>
+[Ansible] (http://docs.ansible.com/ansible/index.html) is an IT automation tool. It is 
+excellent for configuration management, orchestration and deployment automation. Ansible
+is gaining popularity over other tools due to it's simplicity in usage and architecture.
 If you are not familiar with Ansible, you can read the [Ansible documentation] (http://docs.ansible.com/ansible/index.html).
-I will assume that you are familiar with Ansible, Ansible playbooks and ansible modules.
  
-To give a very brief introduction: Ansible is an IT automation tool. It is excellent for 
-configuration management, orchestration and deployment. Ansible in some ways surpasses other such
-tools with it's simplicity in usage and installation. 
-
 **So what is pyAnsible**
 pyAnsible is a python module that interfaces with the Ansible.Runner and Ansible.Inventory modules
 and provides a simple python API that you can invoke to directly access ansible modules.
