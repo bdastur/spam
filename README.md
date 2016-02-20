@@ -6,6 +6,9 @@ to directly invoke ansible module from python API.
 --------
 
 + [Introduction] (https://github.com/bdastur/spam/blob/master/README.md#introduction)
++ [Installation] (https://github.com/bdastur/spam/blob/master/README.md#installation)
++ [Sample Usage] (https://github.com/bdastur/spam/blob/master/README.md#usage)
+
 
 # Introduction<a name="introduction"></a>
 [Ansible] (http://docs.ansible.com/ansible/index.html) is an IT automation tool. It is 
@@ -26,4 +29,63 @@ Some usecases where I have used this module:
  - Developed a [remote execution CLI] (https://github.com/bdastur/relic) to execute commands on multiple hosts
    simultaneously.
  - Check disk utilization on hosts and send a warning email when disk usage exceeds a threshold. 
+
+# Installation:<a name="installation"></a>
+
+```
+    pip install pyansible
+```
+
+# Sample Usage:<a name="usage"></a>
+Here's a simple example of using pyAnsible library to execute operations on multiple remote hosts:
+
+```
+    import sys
+    # 1. Imports
+    import pyansible.ansirunner
+    import pyansible.ansiInventory
+    
+    # 2. Using inventory.
+    myhostgroup = "nova"
+    inventory = pyansible.ansiInventory.AnsibleInventory("./ansible_invfile")
+    if not inventory.get_hosts(myhostgroup)
+        print "No host for group %s found " % myhostgroup
+        sys.exit()
+    hostlist = inventory.get_hosts(myhostgroup[0]['hostlist'])
+
+    # 3. Using runner: Try a simple connectivity test.
+    runner = pyansible.ansirunner.AnsibleRunner()
+    result, _ = runner.ansible_perform_operation(
+        host_list=hostlist,
+        remote_user=myusername,
+        remote_pass=mypass,
+        module="ping")
+
+    for host in result['dark'].keys():
+        print "%s: %s" % (host, "failed")
+
+    for host in result['contacted'].keys():
+        print "%s: %s" % (host, "OK")                
+
+    # 4. Using runner: Execute a command. (with sudo) if required.
+ 
+    cmd = "grep rabbit_hosts /etc/nova/nova.conf" 
+    result, _ = self.runner.ansible_perform_operation(
+        host_list=hostlist,
+        remote_user=username,
+        remote_pass=password,
+        sudo=self.sudo,
+        sudo_user=self.sudo_user,
+        sudo_pass=self.sudo_pass,
+        module="shell",
+        module_args=cmd)
+  
+    # Display result.
+    for host in result['contacted'].keys():
+        try:
+            print result['contacted'][host]['stdout']
+        except KeyError:
+            print "No data for %s " % host
+
+```
 
