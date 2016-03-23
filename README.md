@@ -41,12 +41,15 @@ Some usecases where I have used this module:
 # Sample Usage:<a name="usage"></a>
 Here's a simple example of using pyAnsible library to execute operations on multiple remote hosts:
 
+Import pyansible runner and Inventory
 ```
     import sys
     # 1. Imports
     import pyansible.ansirunner
     import pyansible.ansiInventory
-    
+ ```
+Using the Inventory:
+ ```
     # 2. Using inventory.
     myhostgroup = "nova"
     inventory = pyansible.ansiInventory.AnsibleInventory("./ansible_invfile")
@@ -54,7 +57,9 @@ Here's a simple example of using pyAnsible library to execute operations on mult
         print "No host for group %s found " % myhostgroup
         sys.exit()
     hostlist = inventory.get_hosts(myhostgroup[0]['hostlist'])
-
+ ```
+Using the runner:
+ ```
     # 3. Using runner: Try a simple connectivity test.
     runner = pyansible.ansirunner.AnsibleRunner()
     result, _ = runner.ansible_perform_operation(
