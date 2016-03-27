@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import unittest
 import spam.ansirunner
 import spam.plugins.virsh as virsh
@@ -26,7 +27,6 @@ class FileHandler(object):
         except yaml.parser.ParserError as parse_err:
             print "Failed to parse %s [%s] " % (self.yamlfile, parse_err)
             return
-
 
     def get_parsed_data(self, keys):
         '''
@@ -76,8 +76,8 @@ class SPAMUT(unittest.TestCase):
 
     def setUp(self):
         self.fhandler = FileHandler()
-        self.username = self.fhandler.get_parsed_data(["USERNAME"])
-        self.password = self.fhandler.get_parsed_data(["PASSWORD"])
+        self.username = os.environ.get("PYANSI_USERNAME", None)
+        self.password = os.environ.get("PYANSI_PASSWORD", None)
         self.serveriplist = self.fhandler.get_server_ssh_ips()
         self.virshrunner = virsh.Virsh(
             host_list=self.serveriplist,
