@@ -6,7 +6,7 @@ SPAM virsh Module
 The module interfaces with virsh commands to get hypervisor and VM stats.
 """
 
-import spam.ansirunner
+import pyansible.ansirunner
 import rex
 
 
