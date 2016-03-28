@@ -6,7 +6,7 @@ with open('README.md') as fhandle:
 
 setup(
     name='pyansible',
-    version='1.0.2',
+    version='1.0.3',
     description='A module for interfacing with Ansible Runner and Inventory.',
     long_description=long_description,
     url="https://github.com/bdastur/spam",
