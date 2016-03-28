@@ -30,7 +30,7 @@ class Virsh(object):
         self.sudo = sudo
         self.sudo_user = sudo_user
         self.sudo_pass = sudo_pass
-        self.runner = spam.ansirunner.AnsibleRunner()
+        self.runner = pyansible.ansirunner.AnsibleRunner()
 
     def get_validated_params(self,
                              host_list, remote_user, remote_pass,

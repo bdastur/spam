@@ -3,8 +3,9 @@
 
 import os
 import unittest
-import spam.ansirunner
-import spam.plugins.virsh as virsh
+import pyansible.ansirunner
+import pyansible.plugins.virsh as virsh
+import pyansible.ansivault as ansivault
 import yaml
 import pprint
 
@@ -91,7 +92,7 @@ class SPAMUT(unittest.TestCase):
         print "basic test"
         print self.username
         print self.serveriplist
-        runner = spam.ansirunner.AnsibleRunner()
+        runner = pyansible.ansirunner.AnsibleRunner()
         result, failed_hosts = runner.ansible_perform_operation(
             host_list=self.serveriplist,
             remote_user=self.username,
@@ -180,6 +181,60 @@ class SPAMUT(unittest.TestCase):
         self.failUnless(virsh_result is not None)
         pp = pprint.PrettyPrinter(indent=2)
         pp.pprint(virsh_result)
+
+    def create_test_file(self, filename):
+        '''
+        Create a test file
+        '''
+        fhandle = open(filename, "w")
+        fhandle.write("This is a test file")
+        fhandle.close()
+
+    def test_encrypt_file(self):
+        filename = "/tmp/testfile.txt"
+        self.create_test_file(filename)
+        vault = ansivault.AnsiVault()
+        vault.encrpyt_file(filename)
+
+        # Read the data again after decrypting.
+        vault.decrypt_file(filename)
+
+        fhandle = open(filename, "r")
+        data = fhandle.read()
+        print "data: ", data
+
+        # cleanup after test
+        os.remove(filename)
+
+    def test_encrypt_invalid(self):
+
+        #1. File does not exist.
+        filename = "/tmp/testinvalid.txt"
+        vault = ansivault.AnsiVault()
+        vault.encrpyt_file(filename)
+
+        #2. Try encrypting encrypted file.
+        filename = "/tmp/testfile.txt"
+        self.create_test_file(filename)
+
+        vault = ansivault.AnsiVault()
+        vault.encrpyt_file(filename)
+
+        if vault.is_file_encrypted(filename):
+            print "File encrypted"
+
+        vault.encrpyt_file(filename)
+        vault.encrpyt_file(filename)
+
+        os.remove(filename)
+
+        #3. Try decrypting a non encrypted file.
+        filename = "/tmp/testfile.txt"
+        self.create_test_file(filename)
+
+        vault = ansivault.AnsiVault()
+        vault.decrypt_file(filename)
+
 
 
 
