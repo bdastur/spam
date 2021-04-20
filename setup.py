@@ -33,6 +33,6 @@ setup(
                       'MarkupSafe',
                       'jinja2',
                       'PyYAML',
-                      'ansible==1.9.4']
+                      'ansible==2.9.20']
 )
 
